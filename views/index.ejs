@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+
+<body>
+    <h1>URL Shortener</h1>
+    <% if (locals.id) { %>
+        <p>URL Generated: <a href="http://localhost:3000/url/<%= id %>">http://localhost:3000/url/<%= id %></a></p>
+    <% } %>
+    
+    <div>
+        <form method="post" action="/url">
+            <label>Enter Your Original URL</label>
+            <input type="text" name="url" placeholder="https://www.example.com">
+            <button type="submit">Generate</button>
+        </form>
+    </div>
+
+    <div>
+        <% if (locals.Urls) { %> <!-- Check if urls exist and is an array -->
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>S No.</th>
+                        <th>ShortId</th>
+                        <th>Redirect URL</th>
+                        <th>Clicks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% Urls.forEach((url, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= url.shortId %></td>
+                            <td><%= url.redirectURL %></td>
+                            <td><%= url.visitHistory.length %></td> <!-- Corrected the typo here -->
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        <% } else { %> <!-- Optional: Message when no URLs are present -->
+            <p>No URLs found.</p>
+        <% } %>
+    </div>
+</body>
+
+</html>
